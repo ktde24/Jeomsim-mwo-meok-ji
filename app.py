@@ -57,7 +57,7 @@ def ensure_bootstrap() -> None:
 def inject_styles() -> None:
     st.markdown("""
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap');
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -71,6 +71,7 @@ html, body, .stApp {
 section[data-testid="stSidebar"] { display: none; }
 
 h1, h2, h3, h4 { font-weight: 800; letter-spacing: -0.025em; }
+.display-font { font-family: 'Space Grotesk', 'Pretendard', sans-serif !important; }
 
 /* ── Tabs ── */
 [data-testid="stTabs"] { gap: 0 !important; }
@@ -149,9 +150,12 @@ hr { border-color: #E2E0D9; margin: 1.25rem 0; }
 /* ── App header ── */
 .app-header {
     display: flex; align-items: center; justify-content: space-between;
-    padding: 1.4rem 1.75rem;
-    background: #111; color: #fff;
-    border-radius: 20px; margin-bottom: 1.75rem;
+    padding: 1.5rem 1.75rem;
+    background:
+        radial-gradient(circle at top right, rgba(255,255,255,0.08), transparent 28%),
+        linear-gradient(135deg, #161616 0%, #222222 100%);
+    color: #fff;
+    border-radius: 24px; margin-bottom: 1.75rem;
     position: relative; overflow: hidden;
 }
 .app-header::before {
@@ -168,8 +172,8 @@ hr { border-color: #E2E0D9; margin: 1.25rem 0; }
     background: rgba(255,255,255,0.03);
     pointer-events: none;
 }
-.app-header-title { font-size: 1.6rem; font-weight: 800; letter-spacing: -0.04em; color: #fff; line-height: 1; }
-.app-header-sub   { font-size: 0.8rem; color: rgba(255,255,255,0.45); margin-top: 0.35rem; }
+.app-header-title { font-family: 'Space Grotesk', sans-serif; font-size: 1.75rem; font-weight: 700; letter-spacing: -0.04em; color: #fff; line-height: 1; }
+.app-header-sub   { font-size: 0.82rem; color: rgba(255,255,255,0.55); margin-top: 0.42rem; }
 .app-header-stats { display: flex; gap: 0.5rem; }
 .stat-chip {
     background: rgba(255,255,255,0.08);
@@ -183,29 +187,30 @@ hr { border-color: #E2E0D9; margin: 1.25rem 0; }
 
 /* ── Winner card ── */
 .winner-card {
-    background: linear-gradient(135deg, #1A1A2E 0%, #16213E 50%, #0F3460 100%);
+    background: linear-gradient(135deg, #111827 0%, #172554 55%, #1d4ed8 100%);
     color: #fff; border-radius: 22px;
     padding: 1.75rem 2rem; margin-bottom: 1rem;
     position: relative; overflow: hidden;
-    box-shadow: 0 8px 32px rgba(15,52,96,0.35);
+    box-shadow: 0 10px 34px rgba(30, 64, 175, 0.24);
 }
 .winner-card::before {
     content: ''; position: absolute; top: -100px; right: -80px;
     width: 300px; height: 300px; border-radius: 50%;
-    background: radial-gradient(circle, rgba(96,165,250,0.12) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(255,255,255,0.13) 0%, transparent 72%);
 }
 .winner-card::after {
     content: ''; position: absolute; bottom: -60px; left: -40px;
     width: 200px; height: 200px; border-radius: 50%;
-    background: radial-gradient(circle, rgba(167,139,250,0.1) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(96,165,250,0.18) 0%, transparent 70%);
 }
-.winner-inner { position: relative; z-index: 1; display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
+.winner-inner { position: relative; z-index: 1; display: grid; grid-template-columns: 1.15fr 0.85fr; align-items: center; gap: 1.25rem; }
 .winner-eyebrow {
     font-size: 0.68rem; font-weight: 700; text-transform: uppercase;
     letter-spacing: 0.15em; color: rgba(255,255,255,0.4); margin-bottom: 0.55rem;
 }
 .winner-name {
-    font-size: 2.1rem; font-weight: 800; letter-spacing: -0.04em;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 2.3rem; font-weight: 700; letter-spacing: -0.04em;
     line-height: 1.05; margin-bottom: 0.45rem;
 }
 .winner-meta { font-size: 0.82rem; color: rgba(255,255,255,0.5); margin-bottom: 1rem; }
@@ -215,6 +220,47 @@ hr { border-color: #E2E0D9; margin: 1.25rem 0; }
                       -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 .winner-score-label { font-size: 0.68rem; color: rgba(255,255,255,0.35); margin-top: 0.1rem;
                       font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; }
+.wheel-wrap {
+    display: flex; align-items: center; justify-content: center;
+}
+.wheel-disc {
+    width: 230px; height: 230px; border-radius: 50%;
+    background:
+        conic-gradient(from 8deg, #f97316 0 16%, #fb7185 16% 33%, #facc15 33% 50%, #38bdf8 50% 66%, #34d399 66% 83%, #a78bfa 83% 100%);
+    position: relative;
+    box-shadow: inset 0 0 0 10px rgba(255,255,255,0.08), 0 12px 30px rgba(0,0,0,0.18);
+    animation: slowFloat 7s ease-in-out infinite;
+}
+.wheel-disc::before {
+    content: ''; position: absolute; inset: 18px; border-radius: 50%;
+    background: rgba(17,24,39,0.9);
+    border: 1px solid rgba(255,255,255,0.08);
+}
+.wheel-disc::after {
+    content: ''; position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+    width: 0; height: 0;
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+    border-top: 22px solid #fff;
+    filter: drop-shadow(0 6px 8px rgba(0,0,0,0.18));
+}
+.wheel-center {
+    position: absolute; inset: 0; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; z-index: 2; text-align: center;
+    padding: 2rem;
+}
+.wheel-center-label {
+    font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+    color: rgba(255,255,255,0.45); margin-bottom: 0.45rem;
+}
+.wheel-center-name {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.15rem; line-height: 1.15; font-weight: 700; color: #fff;
+}
+@keyframes slowFloat {
+    0%, 100% { transform: rotate(0deg) translateY(0px); }
+    50% { transform: rotate(4deg) translateY(-4px); }
+}
 
 /* ── Cards ── */
 .card {
@@ -228,6 +274,15 @@ hr { border-color: #E2E0D9; margin: 1.25rem 0; }
     border-color: var(--accent, #D5D3CC);
     transform: translateY(-1px);
 }
+.beli-card {
+    background: #fff;
+    border: 1px solid #ECE8DF;
+    border-radius: 20px;
+    padding: 1rem 1.05rem 0.95rem;
+    margin-bottom: 0.8rem;
+    box-shadow: 0 8px 24px rgba(17, 17, 17, 0.04);
+}
+.beli-card:hover { box-shadow: 0 12px 28px rgba(17,17,17,0.07); }
 .card-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.75rem; }
 .card-name { font-size: 1rem; font-weight: 700; color: #111; line-height: 1.25; }
 .card-sub  { font-size: 0.78rem; color: #9E9890; margin-top: 0.2rem; }
@@ -302,6 +357,23 @@ hr { border-color: #E2E0D9; margin: 1.25rem 0; }
     display: flex; align-items: center; gap: 0.5rem;
     background: #fff; border: 1px solid #E2E0D9;
     border-radius: 14px; padding: 0.7rem 1rem; margin-bottom: 1.25rem;
+}
+.soft-panel {
+    background: rgba(255,255,255,0.9);
+    border: 1px solid #E8E3D8;
+    border-radius: 18px;
+    padding: 1rem 1.1rem;
+}
+.manage-switch [data-baseweb="radio"] {
+    background: #fff;
+    border: 1px solid #E2E0D9;
+    border-radius: 999px;
+    padding: 0.25rem;
+}
+@media (max-width: 900px) {
+    .winner-inner { grid-template-columns: 1fr; }
+    .wheel-wrap { justify-content: flex-start; }
+    .wheel-disc { width: 190px; height: 190px; }
 }
 </style>
 """, unsafe_allow_html=True)
@@ -447,9 +519,14 @@ def tab_recommend(restaurants: list[dict]) -> None:
                 {reasons_html}
             </div>
         </div>
-        <div class="winner-score-block">
-            <div class="winner-score-num">{score_display}</div>
-            <div class="winner-score-label">추천점수</div>
+        <div class="wheel-wrap">
+            <div class="wheel-disc">
+                <div class="wheel-center">
+                    <div class="wheel-center-label">오늘의 점심은?</div>
+                    <div class="wheel-center-name">{dname(top)}</div>
+                    <div class="winner-score-label" style="margin-top:0.6rem;">추천점수 {score_display}</div>
+                </div>
+            </div>
         </div>
     </div>
 </div>""", unsafe_allow_html=True)
@@ -488,6 +565,10 @@ def tab_recommend(restaurants: list[dict]) -> None:
 # ── Tab: 식당 목록 ────────────────────────────────────────────────────────────
 
 def tab_directory(restaurants: list[dict]) -> None:
+    st.markdown('<div class="section-label">Directory</div>', unsafe_allow_html=True)
+    st.markdown('<h3 class="display-font" style="margin-bottom:0.35rem;">탐색하고 저장해두는 식당 카드북</h3>', unsafe_allow_html=True)
+    st.caption("Beli처럼 빠르게 훑어보고, Notion처럼 필요한 정보만 단정하게 정리해둔 목록입니다.")
+
     m1, m2, m3, m4 = st.columns(4)
     m1.metric("전체", len(restaurants))
     m2.metric("평점 수집", sum(1 for r in restaurants if r.get("rating")))
@@ -524,7 +605,7 @@ def tab_directory(restaurants: list[dict]) -> None:
             )
             with col:
                 st.markdown(f"""
-<div class="card" style="{style}">
+<div class="beli-card" style="{style}">
     <div class="card-row">
         <div style="flex:1;min-width:0;">
             <div class="card-name">{dname(r)}</div>
@@ -589,6 +670,9 @@ def tab_visits(restaurants: list[dict]) -> None:
 # ── Tab: 관리 ─────────────────────────────────────────────────────────────────
 
 def tab_manage(restaurants: list[dict]) -> None:
+    st.markdown('<div class="section-label">Workspace</div>', unsafe_allow_html=True)
+    st.markdown('<h3 class="display-font" style="margin-bottom:0.35rem;">카드형 내부툴처럼 관리하기</h3>', unsafe_allow_html=True)
+    st.caption("식당을 추가하고, 고치고, 데이터 수집을 돌리는 작업을 한 곳에서 정리합니다.")
     sub = st.radio("", ["식당 추가", "식당 수정", "데이터 수집"],
                    horizontal=True, key="manage_sub", label_visibility="collapsed")
     st.markdown('<div style="height:0.25rem;"></div>', unsafe_allow_html=True)
