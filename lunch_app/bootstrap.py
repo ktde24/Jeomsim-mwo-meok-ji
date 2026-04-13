@@ -282,6 +282,16 @@ CURATED_RESTAURANTS = [
         "note": "IFC몰 무난한 점심 후보. source=search result based mention",
     },
     {
+        "name": "사보텐 여의도IFC몰점",
+        "category": "일식",
+        "distance_km": 0.9,
+        "address": "서울 영등포구 국제금융로 10 IFC몰 B1",
+        "naver_url": "",
+        "price_level": "13000~20000원",
+        "tags": "돈카츠,일식,IFC몰",
+        "note": "IFC몰 지하 일식 돈카츠 후보.",
+    },
+    {
         "name": "고봉삼계탕 여의도점",
         "category": "한식",
         "distance_km": 0.8,

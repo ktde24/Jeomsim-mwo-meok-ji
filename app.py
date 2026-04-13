@@ -27,7 +27,7 @@ from lunch_app.repository import (
 st.set_page_config(page_title="Lunch Radar", page_icon="🍽️", layout="wide")
 
 CATEGORIES = ["전체", "한식", "일식", "중식", "양식", "베트남", "태국", "분식", "카페", "기타"]
-DISTANCE_OPTIONS = [1, 3, 5]
+DISTANCE_OPTIONS = [0.5, 1.0, 1.5]
 PRICE_OPTIONS = ["", "~10000원", "10000~15000원", "15000~20000원", "20000원~"]
 CONGESTION_LABEL = {1: "여유", 2: "보통", 3: "혼잡"}
 
@@ -187,79 +187,34 @@ hr { border-color: #E2E0D9; margin: 1.25rem 0; }
 
 /* ── Winner card ── */
 .winner-card {
-    background: linear-gradient(135deg, #111827 0%, #172554 55%, #1d4ed8 100%);
+    background: #111;
     color: #fff; border-radius: 22px;
     padding: 1.75rem 2rem; margin-bottom: 1rem;
     position: relative; overflow: hidden;
-    box-shadow: 0 10px 34px rgba(30, 64, 175, 0.24);
+    box-shadow: 0 4px 24px rgba(0,0,0,0.15);
 }
 .winner-card::before {
-    content: ''; position: absolute; top: -100px; right: -80px;
-    width: 300px; height: 300px; border-radius: 50%;
-    background: radial-gradient(circle, rgba(255,255,255,0.13) 0%, transparent 72%);
+    content: ''; position: absolute; top: -80px; right: -80px;
+    width: 220px; height: 220px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,255,255,0.04) 0%, transparent 70%);
+    pointer-events: none;
 }
-.winner-card::after {
-    content: ''; position: absolute; bottom: -60px; left: -40px;
-    width: 200px; height: 200px; border-radius: 50%;
-    background: radial-gradient(circle, rgba(96,165,250,0.18) 0%, transparent 70%);
-}
-.winner-inner { position: relative; z-index: 1; display: grid; grid-template-columns: 1.15fr 0.85fr; align-items: center; gap: 1.25rem; }
+.winner-inner { position: relative; z-index: 1; }
 .winner-eyebrow {
     font-size: 0.68rem; font-weight: 700; text-transform: uppercase;
-    letter-spacing: 0.15em; color: rgba(255,255,255,0.4); margin-bottom: 0.55rem;
+    letter-spacing: 0.15em; color: rgba(255,255,255,0.35); margin-bottom: 0.6rem;
 }
 .winner-name {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 2.3rem; font-weight: 700; letter-spacing: -0.04em;
-    line-height: 1.05; margin-bottom: 0.45rem;
+    font-size: 2.1rem; font-weight: 700; letter-spacing: -0.035em;
+    line-height: 1.1; margin-bottom: 0.4rem;
 }
-.winner-meta { font-size: 0.82rem; color: rgba(255,255,255,0.5); margin-bottom: 1rem; }
-.winner-score-block { text-align: right; flex-shrink: 0; }
-.winner-score-num   { font-size: 3rem; font-weight: 800; line-height: 1;
-                      background: linear-gradient(135deg, #60A5FA, #A78BFA);
-                      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-.winner-score-label { font-size: 0.68rem; color: rgba(255,255,255,0.35); margin-top: 0.1rem;
-                      font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; }
-.wheel-wrap {
-    display: flex; align-items: center; justify-content: center;
-}
-.wheel-disc {
-    width: 230px; height: 230px; border-radius: 50%;
-    background:
-        conic-gradient(from 8deg, #f97316 0 16%, #fb7185 16% 33%, #facc15 33% 50%, #38bdf8 50% 66%, #34d399 66% 83%, #a78bfa 83% 100%);
-    position: relative;
-    box-shadow: inset 0 0 0 10px rgba(255,255,255,0.08), 0 12px 30px rgba(0,0,0,0.18);
-    animation: slowFloat 7s ease-in-out infinite;
-}
-.wheel-disc::before {
-    content: ''; position: absolute; inset: 18px; border-radius: 50%;
-    background: rgba(17,24,39,0.9);
-    border: 1px solid rgba(255,255,255,0.08);
-}
-.wheel-disc::after {
-    content: ''; position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
-    width: 0; height: 0;
-    border-left: 12px solid transparent;
-    border-right: 12px solid transparent;
-    border-top: 22px solid #fff;
-    filter: drop-shadow(0 6px 8px rgba(0,0,0,0.18));
-}
-.wheel-center {
-    position: absolute; inset: 0; display: flex; flex-direction: column;
-    align-items: center; justify-content: center; z-index: 2; text-align: center;
-    padding: 2rem;
-}
-.wheel-center-label {
-    font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
-    color: rgba(255,255,255,0.45); margin-bottom: 0.45rem;
-}
-.wheel-center-name {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 1.15rem; line-height: 1.15; font-weight: 700; color: #fff;
-}
-@keyframes slowFloat {
-    0%, 100% { transform: rotate(0deg) translateY(0px); }
-    50% { transform: rotate(4deg) translateY(-4px); }
+.winner-meta { font-size: 0.82rem; color: rgba(255,255,255,0.42); margin-bottom: 0.9rem; }
+.winner-score-badge {
+    display: inline-flex; align-items: center; gap: 0.3rem;
+    background: rgba(255,255,255,0.09); border: 1px solid rgba(255,255,255,0.13);
+    border-radius: 99px; padding: 0.28rem 0.75rem;
+    font-size: 0.75rem; font-weight: 700; color: rgba(255,255,255,0.6);
 }
 
 /* ── Cards ── */
@@ -371,9 +326,7 @@ hr { border-color: #E2E0D9; margin: 1.25rem 0; }
     padding: 0.25rem;
 }
 @media (max-width: 900px) {
-    .winner-inner { grid-template-columns: 1fr; }
-    .wheel-wrap { justify-content: flex-start; }
-    .wheel-disc { width: 190px; height: 190px; }
+    .winner-name { font-size: 1.7rem !important; }
 }
 </style>
 """, unsafe_allow_html=True)
@@ -458,14 +411,14 @@ def filter_restaurants(
 # ── Tab: 추천 ─────────────────────────────────────────────────────────────────
 
 def tab_recommend(restaurants: list[dict]) -> None:
-    col_f1, col_f2, col_f3, col_f4, col_f5, col_f6 = st.columns([1.4, 1.1, 1, 1, 1, 1.2])
-    category      = col_f1.selectbox("카테고리", CATEGORIES, key="rec_category", label_visibility="collapsed")
-    max_dist      = col_f2.selectbox("거리", DISTANCE_OPTIONS, index=1, key="rec_dist",
-                                     format_func=lambda v: f"{v}km 이내", label_visibility="collapsed")
-    excl_rec      = col_f3.checkbox("최근 방문 제외", value=True, key="rec_excl_recent")
-    excl_crowd    = col_f4.checkbox("혼잡한 곳 제외", key="rec_excl_crowd")
-    excl_cafe     = col_f5.checkbox("카페 제외", value=True, key="rec_excl_cafe")
-    excl_yesterday = col_f6.checkbox("전날 카테고리 제외", value=True, key="rec_excl_yesterday")
+    fc1, fc2, fc3, fc4, fc5, fc6 = st.columns([1.8, 1.4, 1.1, 1.1, 1.0, 1.4])
+    category      = fc1.selectbox("카테고리", CATEGORIES, key="rec_category", label_visibility="collapsed")
+    max_dist      = fc2.selectbox("거리", DISTANCE_OPTIONS, index=1, key="rec_dist",
+                                  format_func=lambda v: f"{v:.1f}km 이내", label_visibility="collapsed")
+    excl_rec      = fc3.checkbox("최근 제외", value=True, key="rec_excl_recent")
+    excl_crowd    = fc4.checkbox("혼잡 제외", key="rec_excl_crowd")
+    excl_cafe     = fc5.checkbox("카페 제외", value=True, key="rec_excl_cafe")
+    excl_yesterday = fc6.checkbox("전날 제외", value=True, key="rec_excl_yesterday")
 
     yesterday_cats: set[str] = get_yesterday_categories() if excl_yesterday else set()
     # 카테고리 직접 선택 시에는 전날 제외 무시
@@ -493,10 +446,9 @@ def tab_recommend(restaurants: list[dict]) -> None:
         for _ in range(18):
             pick = random.choice(names)
             spin_slot.markdown(
-                f'<div class="winner-card">'
-                f'<div class="winner-inner">'
-                f'<div><div class="winner-eyebrow">뽑는 중…</div>'
-                f'<div class="winner-name">{pick}</div></div>'
+                f'<div class="winner-card"><div class="winner-inner">'
+                f'<div class="winner-eyebrow">뽑는 중…</div>'
+                f'<div class="winner-name">{pick}</div>'
                 f'</div></div>',
                 unsafe_allow_html=True,
             )
@@ -510,23 +462,13 @@ def tab_recommend(restaurants: list[dict]) -> None:
     spin_slot.markdown(f"""
 <div class="winner-card">
     <div class="winner-inner">
-        <div style="flex:1;min-width:0;">
-            <div class="winner-eyebrow">Today's Pick</div>
-            <div class="winner-name">{dname(top)}</div>
-            <div class="winner-meta">{top['category']} · {top['distance_km']}km</div>
-            <div class="pills">
-                {rating_pill(top)}{review_pill(top)}{congestion_pill(top)}{naver_pill(top.get('naver_url'))}
-                {reasons_html}
-            </div>
-        </div>
-        <div class="wheel-wrap">
-            <div class="wheel-disc">
-                <div class="wheel-center">
-                    <div class="wheel-center-label">오늘의 점심은?</div>
-                    <div class="wheel-center-name">{dname(top)}</div>
-                    <div class="winner-score-label" style="margin-top:0.6rem;">추천점수 {score_display}</div>
-                </div>
-            </div>
+        <div class="winner-eyebrow">Today's Pick</div>
+        <div class="winner-name">{dname(top)}</div>
+        <div class="winner-meta">{top['category']} · {top['distance_km']}km</div>
+        <div class="pills">
+            {rating_pill(top)}{review_pill(top)}{congestion_pill(top)}{naver_pill(top.get('naver_url'))}
+            {reasons_html}
+            <span class="winner-score-badge">점수 {score_display}</span>
         </div>
     </div>
 </div>""", unsafe_allow_html=True)
